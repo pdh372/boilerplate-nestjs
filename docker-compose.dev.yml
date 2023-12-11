@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+    nodejs-service:
+        container_name: nodejs
+        build: 
+            context: .
+            target: development
+        ports:
+            - '3000:3000'
+        environment:
+            - DATABASE_URL=postgresql://postgres:pg@123456@postgres-service:5432/agile-sim-dev
+        volumes:
+            - .:/server
+            - ./node_modules:/server/node_modules
+        depends_on:
+            - postgres-service
+        networks:
+            - agile-sim-network
+        command: yarn start:dev
+
+    postgres-service:
+        container_name: postgres
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=pg@123456
+            - POSTGRES_DB=postgres-service
+        volumes:
+            - agile-sim-pg:/var/lib/postgresql/data
+        networks:
+            - agile-sim-network
+        ports:
+            - '5432:5432'
+
+networks:
+    agile-sim-network:
+        driver: bridge
+
+volumes:
+    agile-sim-pg:
+        driver: local
