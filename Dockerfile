@@ -5,6 +5,7 @@ FROM node:20.9.0-alpine as development
 WORKDIR /server
 
 # Copy package.json and package-lock.json
+COPY yarn.lock ./
 COPY package.json ./
 
 # Install any needed packages
@@ -25,6 +26,7 @@ FROM node:20.9.0-alpine as production
 WORKDIR /server
 
 # Copy package.json and package-lock.json
+COPY yarn.lock ./
 COPY package.json ./
 
 # Install any needed packages

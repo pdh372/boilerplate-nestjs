@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -10,32 +11,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// base model
+
 model User {
   id         Int       @id @default(autoincrement())
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  //
   email      String    @unique
   password   String
   gender     String?
   referred   Int?      @default(-1)
-  created_at DateTime  @default(now())
-  updated_at DateTime? @updatedAt
   // ref
   posts      Post[]
 }
 
 model Post {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+  //
   title       String
   content     String
   // ref
-  user        User     @relation(fields: [user_id], references: [id])
+  user        User      @relation(fields: [user_id], references: [id])
   user_id     Int
-  category    Category @relation(fields: [category_id], references: [id])
+  category    Category  @relation(fields: [category_id], references: [id])
   category_id Int
 }
 
 model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
+  id         Int       @id @default(autoincrement())
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  //
+  name       String
   // ref
-  posts Post[]
+  posts      Post[]
+}
+
+model Test {
+  id   Int    @id @default(autoincrement())
+  name String
 }

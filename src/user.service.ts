@@ -19,6 +19,7 @@ export class UserService {
     }
 
     async findById(id: number) {
+        console.log(await prisma.test.findMany({ where: { name: '' } }));
         return prisma.user.findFirst({ where: { id } });
     }
 }

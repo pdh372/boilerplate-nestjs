@@ -6,10 +6,9 @@ import { map } from 'rxjs/operators';
 export class NormalizeResponse<T> implements NestInterceptor<T, any> {
     intercept(context: ExecutionContext, next: CallHandler<T>): Observable<any> {
         return next.handle().pipe(
-            map(context => ({
-                success: true,
+            map(data => ({
                 errors: [],
-                context: context || null,
+                context: data || null,
             })),
         );
     }

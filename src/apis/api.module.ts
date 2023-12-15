@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { UserModuleV1 } from './v1/users/user.module';
+import { UserModule } from './v1/users/user.module';
 
 @Module({
-    imports: [UserModuleV1],
+    imports: [UserModule],
 })
 export class ApiModule {}
