@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ROUTES, VERSIONS } from '@constants';
 import { UserService } from './user.service';
 import { CreateUserDto } from './user.dto';
@@ -7,6 +7,11 @@ import { CreateUserDto } from './user.dto';
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
+    @Get('/:user_id')
+    retrieve(@Param('user_id') user_id: string) {
+        return this.userService.findOne(user_id);
+    }
+
     @Get('/')
     list() {
         return this.userService.findAll();
@@ -14,6 +19,6 @@ export class UserController {
 
     @Post('/')
     async create(@Body() body: CreateUserDto) {
-        return await this.userService.create({ ...body });
+        return this.userService.create(body);
     }
 }

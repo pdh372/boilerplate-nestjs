@@ -1,17 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { GENDER } from '@constants';
 
 @Entity()
 export class UserEntity {
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
-    @Column({ type: 'varchar', length: 50, unique: true })
+    @Column({ length: 50, unique: true })
     email: string;
 
-    @Column({ type: 'varchar', length: 50 })
+    @Column({ length: 50 })
     password: string;
 
     @Column({ enum: GENDER, default: GENDER.OTHER })
     gender: string;
+
+    @CreateDateColumn()
+    createdAt: Date;
+
+    @UpdateDateColumn()
+    updatedAt: Date;
 }

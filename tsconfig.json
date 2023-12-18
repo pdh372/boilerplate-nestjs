@@ -71,13 +71,6 @@
         "src/types/*"
       ],
       //
-      "@repositories": [
-        "src/repositories"
-      ],
-      "@repositories/*": [
-        "src/repositories/*"
-      ],
-      //
       "@utils": [
         "src/utils"
       ],

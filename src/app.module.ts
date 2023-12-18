@@ -3,11 +3,13 @@ import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { envConfig } from '@configs';
 import { ApiModule } from './apis/v1/api.module';
-import { postgresProviders } from './cores/modules/postgres/postgres.provider';
-import { RepositoryModule } from './repositories';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { RepositoryModule } from './utils/repository.util';
+import { typeOrmConfig } from '@configs';
 
 @Module({
     imports: [
+        TypeOrmModule.forRoot(typeOrmConfig),
         RepositoryModule,
         ApiModule,
         ConfigModule.forRoot({
@@ -21,7 +23,6 @@ import { RepositoryModule } from './repositories';
             provide: APP_PIPE,
             useClass: ValidationPipe,
         },
-        ...postgresProviders,
     ],
 })
 export class AppModule {}
