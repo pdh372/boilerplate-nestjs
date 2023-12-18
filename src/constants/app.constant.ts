@@ -3,3 +3,8 @@ export const GENDER = {
     MALE: 'male',
     OTHER: 'other',
 };
+
+export const MAX_LENGTH = {
+    EMAIL: 50,
+    PASSWORD: 50,
+};

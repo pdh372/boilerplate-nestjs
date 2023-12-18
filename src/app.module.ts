@@ -2,12 +2,13 @@ import { Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { envConfig } from '@configs';
-import { ApiModule } from './apis/api.module';
-import { PrismaModule } from '@cores/modules';
+import { ApiModule } from './apis/v1/api.module';
+import { postgresProviders } from './cores/modules/postgres/postgres.provider';
+import { RepositoryModule } from './repositories';
 
 @Module({
     imports: [
-        PrismaModule,
+        RepositoryModule,
         ApiModule,
         ConfigModule.forRoot({
             isGlobal: true,
@@ -20,10 +21,7 @@ import { PrismaModule } from '@cores/modules';
             provide: APP_PIPE,
             useClass: ValidationPipe,
         },
-        // {
-        //     provide: APP_INTERCEPTOR,
-        //     useClass: NormalizeResponse,
-        // },
+        ...postgresProviders,
     ],
 })
 export class AppModule {}

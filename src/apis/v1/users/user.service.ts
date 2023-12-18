@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@cores/services';
 import { CreateUserDto } from './user.dto';
+import { RepositoryService } from '@repositories';
 
 @Injectable()
 export class UserService {
-    constructor(private readonly _prisma: PrismaService) {}
+    constructor(private repo: RepositoryService) {}
 
-    findAll() {
-        return this._prisma.user.findMany({ where: {} });
+    findAll() {}
+
+    findByEmail(email: string) {
+        return email;
     }
 
     create(data: CreateUserDto) {
-        return this._prisma.user.create({
-            data,
-        });
+        return data;
     }
 }
