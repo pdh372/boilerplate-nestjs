@@ -1,5 +1,6 @@
-import { IsEmail, IsNotEmpty, MaxLength, IsEnum, IsStrongPassword } from 'class-validator';
+import { IsEmail, IsNotEmpty, MaxLength, IsEnum, IsStrongPassword, IsString } from 'class-validator';
 import { GENDER } from '@constants';
+import { PartialType } from '@nestjs/swagger';
 
 export class CreateUserDto {
     @IsNotEmpty()
@@ -13,5 +14,10 @@ export class CreateUserDto {
     password: string;
 
     @IsEnum(GENDER)
-    gender: string;
+    gender: string = GENDER.OTHER;
+
+    @IsString()
+    avatar: string = '';
 }
+
+export class UpdateUserDto extends PartialType(CreateUserDto) {}

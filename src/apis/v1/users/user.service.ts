@@ -1,24 +1,51 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './user.dto';
-import { RepositoryService } from '@utils';
+import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { RepositoryService } from '@modules';
 
 @Injectable()
 export class UserService {
     constructor(private _repo: RepositoryService) {}
 
-    findAll() {
+    find() {
         return this._repo.user.find({});
     }
 
-    findOne(user_id: string) {
-        return this._repo.user.findOne({ where: { id: user_id } });
+    findById(id: string) {
+        return this._repo.user.findOne({
+            where: { id },
+            relations: {
+                profile: true,
+            },
+        });
+    }
+
+    findWithProfile() {
+        return this._repo.user.find({
+            relations: {
+                profile: true,
+            },
+        });
     }
 
     findByEmail(email: string) {
-        return email;
+        return this._repo.user.exist({
+            where: { email },
+        });
     }
 
     create(data: CreateUserDto) {
-        return this._repo.user.save({ ...data });
+        const profile = this._repo.userProfile.create({ avatar: data.avatar });
+        return this._repo.user.save({ ...data, profile });
+    }
+
+    async findByIdAndUpdate(id: string, newData: Partial<UpdateUserDto>) {
+        const oldData = await this.findById(id);
+        if (!oldData) return null;
+
+        if (newData.avatar) {
+            oldData.profile.avatar = newData.avatar;
+        }
+
+        return this._repo.user.save({ ...oldData, ...newData });
     }
 }

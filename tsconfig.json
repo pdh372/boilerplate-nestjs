@@ -64,6 +64,13 @@
         "src/interfaces/*"
       ],
       //
+      "@modules": [
+        "src/modules"
+      ],
+      "@modules/*": [
+        "src/modules/*"
+      ],
+      //
       "@types": [
         "src/types"
       ],

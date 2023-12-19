@@ -1,5 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+    OneToOne,
+    JoinColumn,
+} from 'typeorm';
 import { GENDER } from '@constants';
+import { UserProfileEntity } from './userProfile.entity';
 
 @Entity()
 export class UserEntity {
@@ -20,4 +29,10 @@ export class UserEntity {
 
     @UpdateDateColumn()
     updatedAt: Date;
+
+    @OneToOne(() => UserProfileEntity, userProfile => userProfile.avatar, {
+        cascade: true,
+    })
+    @JoinColumn()
+    profile: UserProfileEntity;
 }

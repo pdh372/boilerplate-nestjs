@@ -9,14 +9,14 @@ services:
         ports:
             - '3000:3000'
         environment:
-            - DATABASE_URL=postgresql://postgres:pg@123456@postgres-service:5432/agile-sim-dev
+            - DATABASE_URL=postgresql://postgres:pg@123456@postgres-service:5432/project-name-dev
         volumes:
             - .:/server
             - ./node_modules:/server/node_modules
         depends_on:
             - postgres-service
         networks:
-            - agile-sim-network
+            - project-name-network
         command: yarn start:dev
 
     postgres-service:
@@ -25,18 +25,17 @@ services:
         environment:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=pg@123456
-            - POSTGRES_DB=postgres-service
         volumes:
-            - agile-sim-pg:/var/lib/postgresql/data
+            - project-name-pg:/var/lib/postgresql/data
         networks:
-            - agile-sim-network
+            - project-name-network
         ports:
             - '5432:5432'
 
 networks:
-    agile-sim-network:
+    project-name-network:
         driver: bridge
 
 volumes:
-    agile-sim-pg:
+    project-name-pg:
         driver: local

@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { envConfig } from '@configs';
 import { ApiModule } from './apis/v1/api.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RepositoryModule } from './utils/repository.util';
+import { RepositoryModule } from './modules/repository/repository.module';
 import { typeOrmConfig } from '@configs';
 
 @Module({

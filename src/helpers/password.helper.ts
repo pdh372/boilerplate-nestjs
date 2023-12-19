@@ -8,6 +8,7 @@ export const hashPassword = async (plainText: string, saltRound = 10) => {
         return '';
     }
 };
+
 export const comparePassword = async (plainText: string, encrypted: string) => {
     try {
         return await bcrypt.compare(plainText, encrypted);
