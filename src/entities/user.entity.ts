@@ -1,38 +1,14 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  OneToOne,
-  JoinColumn,
-} from 'typeorm';
-import { GENDER } from '@constants';
-import { UserProfileEntity } from './userProfile.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { UserGroup } from './user_group.entity';
 
 @Entity()
-export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ length: 50, unique: true })
-  email: string;
+  @Column()
+  username: string;
 
-  @Column({ length: 50 })
-  password: string;
-
-  @Column({ enum: GENDER, default: GENDER.OTHER })
-  gender: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @OneToOne(() => UserProfileEntity, userProfile => userProfile.avatar, {
-    cascade: true,
-  })
-  @JoinColumn()
-  profile: UserProfileEntity;
+  @OneToMany(() => UserGroup, userGroup => userGroup.user)
+  userGroups: UserGroup[];
 }
