@@ -4,27 +4,27 @@ import { UserEntity, UserProfileEntity } from '@entities';
 import { InjectRepository, TypeOrmModule } from '@nestjs/typeorm';
 
 export class RepositoryService {
-    constructor(
-        @InjectRepository(UserEntity)
-        private userRepository: Repository<UserEntity>,
+  constructor(
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
 
-        @InjectRepository(UserProfileEntity)
-        private userProfileRepository: Repository<UserProfileEntity>,
-    ) {}
+    @InjectRepository(UserProfileEntity)
+    private userProfileRepository: Repository<UserProfileEntity>,
+  ) {}
 
-    get user() {
-        return this.userRepository;
-    }
+  get user() {
+    return this.userRepository;
+  }
 
-    get userProfile() {
-        return this.userProfileRepository;
-    }
+  get userProfile() {
+    return this.userProfileRepository;
+  }
 }
 
 @Global()
 @Module({
-    imports: [TypeOrmModule.forFeature([UserEntity, UserProfileEntity])],
-    providers: [RepositoryService],
-    exports: [RepositoryService],
+  imports: [TypeOrmModule.forFeature([UserEntity, UserProfileEntity])],
+  providers: [RepositoryService],
+  exports: [RepositoryService],
 })
 export class RepositoryModule {}

@@ -5,28 +5,28 @@ import { CreateUserDto, UpdateUserDto } from './user.dto';
 
 @Controller({ path: ROUTES.USERS, version: VERSIONS.V1 })
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
-    @Get('/')
-    list() {
-        return this.userService.findWithProfile();
-    }
+  @Get('/')
+  list() {
+    return this.userService.findWithProfile();
+  }
 
-    @Patch('/:user_id')
-    put(@Param('user_id') user_id: string, @Body() body: UpdateUserDto) {
-        return this.userService.findByIdAndUpdate(user_id, body);
-    }
+  @Patch('/:user_id')
+  put(@Param('user_id') user_id: string, @Body() body: UpdateUserDto) {
+    return this.userService.findByIdAndUpdate(user_id, body);
+  }
 
-    @Get('/:user_id')
-    retrieve(@Param('user_id') user_id: string) {
-        return this.userService.findById(user_id);
-    }
+  @Get('/:user_id')
+  retrieve(@Param('user_id') user_id: string) {
+    return this.userService.findById(user_id);
+  }
 
-    @Post('/')
-    async create(@Body() body: CreateUserDto) {
-        const isUserExists = await this.userService.findByEmail(body.email);
-        if (isUserExists) throw new ConflictException();
+  @Post('/')
+  async create(@Body() body: CreateUserDto) {
+    const isUserExists = await this.userService.findByEmail(body.email);
+    if (isUserExists) throw new ConflictException();
 
-        return this.userService.create(body);
-    }
+    return this.userService.create(body);
+  }
 }

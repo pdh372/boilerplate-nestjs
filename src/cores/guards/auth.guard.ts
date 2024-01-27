@@ -5,7 +5,7 @@ import { AuthGuard as AuthGuardBuildIn } from '@nestjs/passport';
 class Local extends AuthGuardBuildIn('local') {}
 
 export const AuthGuard = {
-    UseLocalAuthGuard: function () {
-        return UseGuards(Local);
-    },
+  UseLocalAuthGuard: function () {
+    return UseGuards(Local);
+  },
 };
